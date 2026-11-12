@@ -1,0 +1,21 @@
+<div>
+  <input
+    #searchInput
+    placeholder="Search by title"
+    [value]="search()"
+    (input)="changeSearch(searchInput.value)"
+  />
+
+  <select #statusSelect (change)="changeStatus(statusSelect.value)">
+    <option value="all" [selected]="status() === 'all'">All</option>
+    <option value="pending" [selected]="status() === 'pending'">Pending</option>
+    <option value="completed" [selected]="status() === 'completed'">Completed</option>
+  </select>
+
+  <select #userSelect (change)="changeUser(userSelect.value)">
+    <option value="" [selected]="userId() === null">All users</option>
+    @for (u of users(); track u.id) {
+      <option [value]="u.id" [selected]="u.id === userId()">{{ u.name }}</option>
+    }
+  </select>
+</div>

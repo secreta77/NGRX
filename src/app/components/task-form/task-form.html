@@ -1,0 +1,15 @@
+<form (ngSubmit)="add()" #f="ngForm">
+  <select name="userId" [(ngModel)]="userId" required>
+    <option value="">Select user</option>
+    @for (user of users(); track user.id) {
+      <option [value]="user.id">{{ user.name }}</option>
+    }
+  </select>
+  <input name="title" [(ngModel)]="title" placeholder="Title" required />
+  <input name="dueOn" type="date" [(ngModel)]="dueOn" required />
+  <select name="status" [(ngModel)]="status">
+    <option value="pending">pending</option>
+    <option value="completed">completed</option>
+  </select>
+  <button type="submit" [disabled]="f.invalid">Add task</button>
+</form>

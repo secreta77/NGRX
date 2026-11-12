@@ -1,0 +1,33 @@
+@if (loading()) {
+  <p>Loading...</p>
+}
+
+@if (error()) {
+  <p>Error: {{ error() }}</p>
+  <button (click)="reload()">Try again</button>
+}
+
+@if (!loading() && !error() && tasks().length === 0) {
+  <p>No tasks found</p>
+}
+
+<ul>
+  @for (task of tasks(); track task.id) {
+    <li>
+      @if (editingId() === task.id) {
+        <input [(ngModel)]="editTitle" />
+        <select [(ngModel)]="editStatus">
+          <option value="pending">pending</option>
+          <option value="completed">completed</option>
+        </select>
+        <button (click)="save(task)">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      } @else {
+        {{ task.title }} - {{ userName(task.user_id) }} - {{ task.status }} -
+        {{ task.due_on | date: 'dd.MM.yyyy' }}
+        <button (click)="startEdit(task)">Edit</button>
+        <button (click)="remove(task.id)">Delete</button>
+      }
+    </li>
+  }
+</ul>
